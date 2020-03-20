@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.RegMapper">
+    <select id="getAllReg" resultType="com.kalic.redapple.pojo.Reg">
+        select * from ra_gs_xs_reg where nullify = 'Y'
+    </select>
+    <select id="selRegForRegno" resultType="com.kalic.redapple.pojo.Reg">
+        select * from ra_gs_xs_reg where regno = #{regno}
+    </select>
+    <insert id="insRegInfo" parameterType="Reg">
+        insert into ra_gs_xs_reg VALUES
+        <foreach collection="regs" item="reg" separator =",">
+            (#{reg.regno},#{reg.bookingno},#{reg.roomno},#{reg.roomlbno},#{reg.linkno},#{reg.linkid},#{reg.groupid},#{reg.sureflag},#{reg.isgroup},
+            #{reg.guestname},#{reg.guesttype},#{reg.secrecyflag},#{reg.guestno},#{reg.vipno},#{reg.groupname},#{reg.groupleader},
+            #{reg.groupno},#{reg.irooms},#{reg.dtIndate},#{reg.dtOutdate},#{reg.dtKeep},#{reg.dtOutdateReal},#{reg.intype},
+            #{reg.cstatus},#{reg.days},#{reg.tel},#{reg.roomqty},#{reg.discount},#{reg.price},#{reg.guestsource},#{reg.operid},
+            #{reg.irs},#{reg.ifoods},#{reg.receiptno},#{reg.idtypeno},#{reg.idno},#{reg.sex},#{reg.dtBirthday},#{reg.countryno},
+            #{reg.areano},#{reg.address},#{reg.specialMemo},#{reg.meno},#{reg.securitytype},#{reg.securityReal},#{reg.paywayno},
+            #{reg.dtOper},#{reg.checkroomflag},#{reg.hungflag},#{reg.hungOperid},#{reg.dtHung},#{reg.nullify})
+        </foreach>
+    </insert>
+
+    <select id="selMaxLikeRegno" resultType="java.lang.String">
+        select regno from ra_gs_xs_reg where regno like CONCAT('%', #{linkno}, '%') ORDER BY regno DESC limit 1
+    </select>
+    <select id="selMaxLinkidReg" resultType="java.lang.Integer">
+       select DISTINCT IFNULL(MAX(linkid), 0) AS linkid from ra_gs_xs_reg where nullify = 'Y' ORDER BY linkid DESC limit 1
+    </select>
+    <select id="selMaxGroupidReg" resultType="java.lang.Integer">
+        select DISTINCT IFNULL (MAX(groupid),0) AS groupid from ra_gs_xs_reg where nullify = 'Y' ORDER BY groupid DESC limit 1
+    </select>
+    <update id="updRegRoomqty">
+        update ra_gs_xs_reg set days = #{roomqty.days}, dt_outdate = #{roomqty.newDtOutdate}, roomqty=#{roomqty.roomqty}
+        where regno = #{roomqty.regno}
+    </update>
+    <update id="updRegExitRoom">
+        update ra_gs_xs_reg set checkroomflag = #{checkroomflag}, nullify = #{nullify} where regno = #{regno}
+    </update>
+    <update id="updRegLinkRoom">
+        update ra_gs_xs_reg set linkno = #{item.linkno},linkid = #{item.linkid} where regno = #{item.regno} and roomno = ${item.roomno}
+    </update>
+    <update id="updRegUnpackRoom">
+        update ra_gs_xs_reg set linkno = #{item.linkno},linkid = #{item.linkid} where regno = #{item.regno} and roomno = ${item.roomno}
+    </update>
+    <update id="updRegSwapRoom" parameterType="com.kalic.redapple.vo.SwapRoomInfo">
+        update ra_gs_xs_reg set roomno = #{newRoomno}, price = #{newRegPrice} where regno = #{regno} and roomno = #{oldRoomno}
+    </update>
+</mapper>

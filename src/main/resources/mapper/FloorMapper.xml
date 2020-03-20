@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.FloorMapper">
+    <select id="getAllFloor" resultType="com.kalic.redapple.pojo.Floor">
+        select * from ra_gs_floor
+    </select>
+    <insert id="insFloorInfo">
+        insert into ra_gs_floor values (#{floor.floorno}, #{floor.floorname})
+    </insert>
+    <update id="updFloorInfoForFloorno">
+        update ra_gs_floor set floorname = #{floor.floorname} where floorno = #{floor.floorno}
+    </update>
+    <delete id="delFloorForFloorno">
+        delete from ra_gs_floor where floorno = #{floorno}
+    </delete>
+</mapper>

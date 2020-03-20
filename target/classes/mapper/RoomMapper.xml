@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.RoomMapper">
+    <select id="getAllRoom" resultType="com.kalic.redapple.pojo.Room">
+        select  * from ra_gs_room
+    </select>
+    <select id="getEmptyRooms" resultType="com.kalic.redapple.pojo.Room">
+        select * from ra_gs_room where rstatus = '0'
+    </select>
+    <select id="selAllDirtyRooms" resultType="com.kalic.redapple.pojo.Room">
+         select * from ra_gs_room where rstatus = '3'
+    </select>
+    <select id="selRoomForRoomno" resultType="com.kalic.redapple.pojo.Room">
+        select * from ra_gs_room where roomno = #{roomno}
+    </select>
+    <insert id="insertRoom">
+        insert into ra_gs_room VALUES (#{roomno},#{roomname},#{roomlbno}, #{floorno},#{beds},#{tel},#{rstatus},
+			#{isditry},#{isown},#{stopflag},#{clockflag},#{clockOperid},#{dtLock},#{buildno},#{memoTs},#{meno},
+			#{doorlockid},#{doorroomid},#{bookingno},#{regno},#{ownno},#{stopno})
+    </insert>
+    <insert id="insertBatchRooms">
+        insert into ra_gs_room VALUES
+        <foreach collection="rooms" item="room" separator =",">
+            (#{room.roomno},#{room.roomname},#{room.roomlbno}, #{room.floorno},#{room.beds},#{room.tel},#{room.rstatus},
+            #{room.isditry},#{room.isown},#{room.stopflag},#{room.clockflag},#{room.clockOperid},#{room.dtLock},#{room.buildno},
+            #{room.memoTs},#{room.meno}, #{room.doorlockid},#{room.doorroomid},#{room.bookingno},#{room.regno},#{room.ownno},
+            #{room.stopno})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRoom">
+        delete from ra_gs_room where roomno=#{roomno}
+    </delete>
+
+    <update id="updateRoomStatus">
+        update ra_gs_room set rstatus = #{rstatus}, regno = #{regno} where roomno = #{roomno}
+    </update>
+    <update id="updateBookingBookingno">
+         update ra_gs_room set bookingno = #{bookingno} where roomno = #{roomno}
+    </update>
+    <update id="updateRstatus">
+        update ra_gs_room set rstatus = #{rstatus} where roomno = #{roomno}
+    </update>
+    <update id="updateBatchRstatus">
+        update ra_gs_room set rstatus = #{rstatus} where roomno in
+        <foreach collection="bsTimers" item="bsTimer" separator ="," open="(" close=")">
+             #{bsTimer.roomno}
+        </foreach>
+    </update>
+    <update id="updCalcelBookingRoom">
+         update ra_gs_room set rstatus = #{rstatus}, bookingno = #{bookingno} where roomno = #{roomno}
+    </update>
+    <update id="updExitRoom">
+        update ra_gs_room set regno = #{regno}, rstatus = #{rstatus} where roomno = #{roomno}
+    </update>
+    <update id="updSwapRoom">
+        update ra_gs_room set regno = #{regno}, rstatus = #{rstatus} where roomno = #{roomno}
+    </update>
+</mapper>

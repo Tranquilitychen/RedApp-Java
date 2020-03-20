@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.RoomlbMapper">
+    <select id="getAllRoomlb" resultType="com.kalic.redapple.pojo.Roomlb">
+        select * from ra_gs_roomlb
+    </select>
+    <insert id="insRoomlb">
+        insert into ra_gs_roomlb (roomlbno, roomlbname, subname, beds, breakfasts, longroomflag, timeroomflag,
+         price, longprice, timeprice, weekendprice, holidayprice, timesout_times, itmesout_price,
+         times_hour_num, chalf_hourflag, nlcfprice) VALUES (#{roomlb.roomlbno}, #{roomlb.roomlbname},  #{roomlb.subname},
+         #{roomlb.beds},#{roomlb.breakfasts},#{roomlb.longroomflag},#{roomlb.timeroomflag},#{roomlb.price},#{roomlb.longprice},
+         #{roomlb.timeprice},#{roomlb.weekendprice},#{roomlb.holidayprice},#{roomlb.timesoutTimes},#{roomlb.itmesoutPrice},
+         #{roomlb.timesHourNum},#{roomlb.chalfHourflag},#{roomlb.nlcfprice})
+    </insert>
+    <update id="updRoomlbForRoomno">
+        update ra_gs_roomlb set roomlbname = #{roomlb.roomlbname}, subname = #{roomlb.subname},beds = #{roomlb.beds},
+        breakfasts = #{roomlb.breakfasts}, longroomflag = #{roomlb.longroomflag}, timeroomflag = #{roomlb.timeroomflag},
+         price = #{roomlb.price}, longprice = #{roomlb.longprice}, timeprice = #{roomlb.timeprice}, weekendprice = #{roomlb.weekendprice},
+         holidayprice = #{roomlb.holidayprice}, timesout_times = #{roomlb.timesoutTimes}, itmesout_price = #{roomlb.itmesoutPrice},
+         times_hour_num = #{roomlb.timesHourNum}, chalf_hourflag = #{roomlb.chalfHourflag}, nlcfprice = #{roomlb.nlcfprice}
+         where roomlbno = #{roomlb.roomlbno}
+    </update>
+    <delete id="delRoomlbForRoomno">
+        delete from ra_gs_roomlb where roomlbno = #{roomlbno}
+    </delete>
+</mapper>

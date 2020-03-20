@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.GuestMapper">
+    <select id="getAllGuest" resultType="com.kalic.redapple.pojo.Guest">
+        select * from ra_gs_guest
+    </select>
+    <insert id="insGuestInfo" parameterType="com.kalic.redapple.pojo.Guest"
+            useGeneratedKeys="true" keyColumn="guestno" keyProperty="guestno" >
+        insert into ra_gs_guest (guestname, idtypeno, idno, sex, dt_birthday, countryno, areano, portentryno,
+        address, img_photo, meno, tel, groupflag) values (#{guestname}, #{idtypeno}, #{idno}, #{sex},
+        #{dtBirthday}, #{countryno}, #{areano}, #{portentryno}, #{address}, #{imgPhoto}, #{meno}, #{tel}, #{groupflag})
+    </insert>
+</mapper>

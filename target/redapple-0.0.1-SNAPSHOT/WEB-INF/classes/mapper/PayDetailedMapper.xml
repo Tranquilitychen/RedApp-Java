@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.PayDetailedMapper">
+    <select id="selPayDetaileds" resultType="com.kalic.redapple.pojo.PayDetailed">
+        select * from ra_gs_pay_detailed
+    </select>
+    <insert id="insBatchPayDetaileds">
+        insert into ra_gs_pay_detailed (payno, roomno, regno, bookingno, guestno, money, isReceipts,
+        sourcetype, paytype, dt_oper, operid, meno) VALUES
+        <foreach collection="payDetailedList" item="payDetailed" separator =",">
+            (#{payDetailed.payno},#{payDetailed.roomno},#{payDetailed.regno},#{payDetailed.bookingno},
+            #{payDetailed.guestno},#{payDetailed.money},#{payDetailed.isReceipts},#{payDetailed.sourcetype},
+            #{payDetailed.paytype},#{payDetailed.dtOper},#{payDetailed.operid},#{payDetailed.meno})
+        </foreach>
+    </insert>
+</mapper>

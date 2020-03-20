@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--设置项-->
+    <settings>
+        <!--打印sql-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--将数据库的字段的下划线自动转换成驼峰=>自动支持驼峰转换-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 自增字段返回自增的id -->
+        <setting name="useGeneratedKeys" value="true"/>
+    </settings>
+    <!--别名-->
+    <typeAliases>
+        <package name="com.kalic.redapple.pojo"/>
+    </typeAliases>
+</configuration>

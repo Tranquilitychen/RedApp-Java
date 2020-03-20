@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.BookingMapper">
+    <select id="selAllBookingInfo" resultType="com.kalic.redapple.pojo.Booking">
+        select * from ra_gs_xs_booking
+    </select>
+    <insert id="insBookingInfo">
+        insert into ra_gs_xs_booking VALUES
+        <foreach collection="bookings" item="booking" separator =",">
+            (#{booking.bookingno},#{booking.regno},#{booking.roomno},#{booking.roomlbno},#{booking.linkno},#{booking.linkid},
+            #{booking.sureflag},#{booking.isgroup},#{booking.guestno},#{booking.vipno},#{booking.groupleader},#{booking.groupno}, #{booking.dtIndate},#{booking.dtOutdate},
+            #{booking.dtKeep},#{booking.cstatus},#{booking.days},#{booking.irs},#{booking.guestsource},#{booking.bookingtype},
+            #{booking.specialMemo},#{booking.meno}, #{booking.operid},#{booking.dtOper},#{booking.securitytype},#{booking.securityReal},
+            #{booking.discount},#{booking.price},#{booking.paywayno},#{booking.dtCancel},#{booking.cancelMeno},#{booking.dtSure})
+        </foreach>
+    </insert>
+    <select id="selMaxLikeBookingno" resultType="java.lang.String">
+        select bookingno from ra_gs_xs_booking where bookingno like CONCAT('%', #{linkno}, '%') ORDER BY bookingno DESC limit 1
+    </select>
+    <update id="updCancelBooking">
+        update ra_gs_xs_booking set cancel_meno = #{cancelMeno}, dt_cancel = #{dtCancel} where bookingno = #{bookingno}
+    </update>
+    <update id="updCancelBatchBooking">
+        update ra_gs_xs_booking set cancel_meno = #{cancelMeno}, dt_cancel = #{dtCancel} where bookingno in
+        <foreach collection="bookings" item="booking" separator ="," open="(" close=")">
+            #{booking.bookingno}
+        </foreach>
+  </update>
+    <select id="selValidBooking" resultType="com.kalic.redapple.pojo.Booking">
+        select * from ra_gs_xs_booking where dt_cancel is NULL
+    </select>
+    <select id="selMaxBookingLinkid" resultType="java.lang.Integer">
+        select DISTINCT linkid from ra_gs_xs_booking  order BY linkid DESC limit 1
+    </select>
+    <update id="updBookingToReg">
+        update ra_gs_xs_booking set cancel_meno = #{cancelMeno}, dt_cancel = #{dtCancel}, sureflag = #{sureflag}
+          where bookingno = #{bookingno}
+    </update>
+</mapper>

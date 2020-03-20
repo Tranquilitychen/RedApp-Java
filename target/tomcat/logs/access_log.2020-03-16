@@ -1,0 +1,12 @@
+127.0.0.1 - - [16/Mar/2020:12:53:48 +0800] "GET /room/getAllRoomData HTTP/1.1" 200 17038 http-bio-8000-exec-2 3542
+127.0.0.1 - - [16/Mar/2020:12:53:48 +0800] "GET /type/getAllRoomlbData HTTP/1.1" 200 1902 http-bio-8000-exec-1 3541
+127.0.0.1 - - [16/Mar/2020:12:53:48 +0800] "GET /reg/getAllReg HTTP/1.1" 200 11992 http-bio-8000-exec-3 3554
+127.0.0.1 - - [16/Mar/2020:12:53:48 +0800] "GET /bussinessCenter/getAllBCData HTTP/1.1" 200 61839 http-bio-8000-exec-4 3887
+127.0.0.1 - - [16/Mar/2020:12:54:17 +0800] "GET /room/getEmptyRoomData HTTP/1.1" 200 8442 http-bio-8000-exec-5 62
+127.0.0.1 - - [16/Mar/2020:12:56:20 +0800] "GET /room/getEmptyRoomData HTTP/1.1" 200 8442 http-bio-8000-exec-6 994
+127.0.0.1 - - [16/Mar/2020:13:11:02 +0800] "GET /room/getEmptyRoomData HTTP/1.1" 200 8442 http-bio-8000-exec-7 561
+127.0.0.1 - - [16/Mar/2020:14:42:04 +0800] "GET /room/getAllRoomData HTTP/1.1" 200 17038 http-bio-8000-exec-1 6316
+127.0.0.1 - - [16/Mar/2020:14:42:04 +0800] "GET /type/getAllRoomlbData HTTP/1.1" 200 1902 http-bio-8000-exec-2 6319
+127.0.0.1 - - [16/Mar/2020:14:42:04 +0800] "GET /reg/getAllReg HTTP/1.1" 200 11992 http-bio-8000-exec-3 6304
+127.0.0.1 - - [16/Mar/2020:14:42:05 +0800] "GET /bussinessCenter/getAllBCData HTTP/1.1" 200 61839 http-bio-8000-exec-4 7308
+127.0.0.1 - - [16/Mar/2020:14:42:35 +0800] "GET /room/getEmptyRoomData HTTP/1.1" 200 8442 http-bio-8000-exec-5 65

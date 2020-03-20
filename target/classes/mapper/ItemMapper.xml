@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.ItemMapper">
+    <select id="selAllItem" resultType="com.kalic.redapple.pojo.Item">
+        select * from ra_gs_item where itemno != '001'
+    </select>
+    <insert id="insItemInfo" parameterType="com.kalic.redapple.pojo.Item">
+        insert into ra_gs_item values (#{itemno}, #{itemname}, #{price}, #{stock})
+    </insert>
+    <delete id="delItemInfo">
+        delete from ra_gs_item where itemno = #{itemno}
+    </delete>
+    <update id="updItemInfo" parameterType="com.kalic.redapple.pojo.Item">
+        update ra_gs_item set itemname = #{itemname}, price = #{price}, stock = #{stock} where itemno = #{itemno}
+    </update>
+</mapper>

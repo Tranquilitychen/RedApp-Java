@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kalic.redapple.mapper.RegBillMapper">
+    <select id="getAllRegBill" resultType="com.kalic.redapple.pojo.RegBill">
+        select * from ra_gs_xs_reg_bill where nullify = 'Y'
+    </select>
+    <select id="getRegBillForRegnoAndRoomno" resultType="com.kalic.redapple.pojo.RegBill">
+        select * from ra_gs_xs_reg_bill where regno = #{regno} and roomno = #{roomno}
+    </select>
+    <insert id="insRegBill">
+        insert into ra_gs_xs_reg_bill (roomno, regno, itemno, itemname, num, price, discount,
+        totalprice, dt_oper, operid, nullify) VALUES
+        <foreach collection="regBillInfoList" item="regBill" separator =",">
+            (#{regBill.roomno},#{regBill.regno},#{regBill.itemno},
+            #{regBill.itemname},#{regBill.num},#{regBill.price},#{regBill.discount},
+            #{regBill.totalprice},#{regBill.dtOper},#{regBill.operid},
+            #{regBill.nullify})
+        </foreach>
+    </insert>
+    <insert id="insRegBillFormReg">
+        insert into ra_gs_xs_reg_bill (roomno, regno, itemno, itemname, num, price, discount,
+        totalprice,dt_indate, dt_outdate, dt_oper, operid, nullify) VALUES
+        <foreach collection="regBills" item="regBill" separator =",">
+            (#{regBill.roomno},#{regBill.regno},#{regBill.itemno},
+            #{regBill.itemname},#{regBill.num},#{regBill.price},#{regBill.discount},
+            #{regBill.totalprice}, #{regBill.dtIndate}, #{regBill.dtOutdate}, #{regBill.dtOper},#{regBill.operid},
+            #{regBill.nullify})
+        </foreach>
+    </insert>
+    <delete id="delRegBill">
+        delete from ra_gs_xs_reg_bill where regno = #{regno}
+    </delete>
+    <update id="updRegBillNum" parameterType="com.kalic.redapple.vo.RegBillInfo">
+        update ra_gs_xs_reg_bill set num = #{num}, totalPrice = #{totalprice},
+          dt_oper = #{dtOper}, operid = #{operid} where regno = #{regno} and itemno = #{itemno} and roomno = #{roomno}
+    </update>
+    <update id="updRegBillSwapRoom" parameterType="com.kalic.redapple.vo.SwapRoomInfo">
+        update ra_gs_xs_reg_bill set roomno = #{newRoomno} where regno = #{regno} and itemno != '001'
+    </update>
+    <update id="updRegBillRoomBillSwapRoom">
+        update ra_gs_xs_reg_bill set num = #{swapRoom.oldBillNum}, totalPrice = #{swapRoom.updBillTotalPrice},
+        dt_outdate = #{swapRoom.dtIndate},
+        dt_oper = #{swapRoom.dtOper}, operid =#{swapRoom.operid}, meno = #{meno}
+        where regno= #{swapRoom.regno} and itemno = #{itemno} and flowid = #{swapRoom.flowid}
+    </update>
+    <update id="updRegBillRoomno">
+        update ra_gs_xs_reg_bill set roomno = #{swapRoom.newRoomno}, price = #{swapRoom.newRegPrice},
+        totalprice = #{swapRoom.updBillTotalPrice}, meno = #{meno}
+        where regno= #{swapRoom.regno} and itemno = #{itemno} and flowid = #{swapRoom.flowid}
+    </update>
+    <insert id="insSwapRoomBill">
+        insert into ra_gs_xs_reg_bill (roomno, regno, itemno, itemname, num, price, discount,
+        totalprice, dt_indate, dt_outdate, dt_oper, operid, nullify) VALUES
+            (#{regBill.roomno},#{regBill.regno},#{regBill.itemno},
+            #{regBill.itemname},#{regBill.num},#{regBill.price},#{regBill.discount},
+            #{regBill.totalprice},#{regBill.dtIndate}, #{regBill.dtOutdate},#{regBill.dtOper},#{regBill.operid},
+            #{regBill.nullify})
+    </insert>
+<!--    <update id="updRegBillQty" parameterType="com.kalic.redapple.pojo.RegBill">
+        update ra_gs_xs_reg_bill set num = #{num}, totalprice =#{totalprice}, dt_oper=#{dtOper}, operid=#{operid},
+        meno= #{meno} where roomno = #{roomno} and regno = #{regno} and  itemno = #{itemno}
+    </update>-->
+    <update id="updRegBillQty" parameterType="com.kalic.redapple.pojo.RegBill">
+        update ra_gs_xs_reg_bill set num = #{num}, totalprice =#{totalprice}, operid=#{operid},
+        meno= #{meno} where roomno = #{roomno} and regno = #{regno} and  itemno = #{itemno} and flowid = #{flowid}
+    </update>
+    <update id="updRegBillNullify">
+        update ra_gs_xs_reg_bill set nullify = 'N' where regno = #{regno} and flowid = #{flowid}
+    </update>
+</mapper>
